@@ -1,3 +1,0 @@
-C:\github\delete-github-folder [master ≡ +0 ~0 -2 | +1 ~0 -0 !]> git commit -m 'remove folder'
- C:\github\delete-github-folder [master ↑ +1 ~0 -0 !]> git push origin master
-
