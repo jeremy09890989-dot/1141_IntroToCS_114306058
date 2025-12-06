@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>114306058_HW7_1A2B</title>
+</head>
+<body>
+   
+    <h1>114306058_HW7_1A2B</h1>
+
+    <p>Enter 4 unique numbers</p>
+    <input type="text" id="guessInput">
+    <button onclick="play()">Guess!</button>
+
+    <hr>
+
+    <div id="recordTitle"><strong>Game Record：</strong></div>
+    <div id="recordArea"></div>
+
+    <script>
+       
+        var answer = generateAnswer();
+        var guessCount = 0;
+        var gameOver = false;
+
+        
+
+        function generateAnswer() {
+            var digits = [];
+            for (var i = 0; i <= 9; i++) {
+                digits.push(i);
+            }
+
+            var selected = [];
+            for (var j = 0; j < 4; j++) {
+                var index = Math.floor(Math.random() * digits.length);
+                selected.push(digits[index]);
+                digits.splice(index, 1); 
+            }
+
+            return selected.join(""); 
+
+        
+        function isValid(str) {
+           
+            if (str.length !== 4) {
+                alert("請輸入剛好 4 位數字！");
+                return false;
+            }
+
+   
+            for (var i = 0; i < 4; i++) {
+                var ch = str.charAt(i);
+                if (ch < '0' || ch > '9') {
+                    alert("請只輸入數字（0~9）！");
+                    return false;
+                }
+            }
+
+      
+            for (var i = 0; i < 4; i++) {
+                for (var j = i + 1; j < 4; j++) {
+                    if (str.charAt(i) === str.charAt(j)) {
+                        alert("每一位數字都不能重複！");
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        // 計算 XAYB
+        function checkAB(guess, ans) {
+            var A = 0;
+            var B = 0;
+
+            for (var i = 0; i < 4; i++) {
+                if (guess.charAt(i) === ans.charAt(i)) {
+                    A++;
+                } else if (ans.indexOf(guess.charAt(i)) !== -1) {
+                    B++;
+                }
+            }
+
+            return A + "A" + B + "B";
+        }
+
+        function play() {
+            if (gameOver) {
+                alert("遊戲已經結束囉！請重新整理頁面再玩一次。");
+                return;
+            }
+
+            var inputField = document.getElementById("guessInput");
+            var val = inputField.value.trim();
+
+
+            if (!isValid(val)) {
+                return;
+            }
+
+            guessCount++;
+
+            var result = checkAB(val, answer);
+
+            var recordArea = document.getElementById("recordArea");
+            recordArea.innerHTML += "第 " + guessCount + " 次： " + val + " → " + result + "<br>";
+
+       
+            if (result === "4A0B") {
+                alert("恭喜你猜對了！總共猜了 " + guessCount + " 次！");
+                gameOver = true;
+            }
+
+       
+            inputField.value = "";
+            inputField.focus();
+        }
+    </script>
+</body>
+</html>
